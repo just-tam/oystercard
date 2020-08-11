@@ -31,12 +31,12 @@ describe Oystercard do
     end
   end
 
-  describe "#deduct" do
-    it "Expext balance to decrease by deduct amount" do
-      amount = 10
-      expect{ subject.deduct amount }.to change{ subject.balance }.by -10
-    end
-  end
+  #describe "#deduct" do
+  #  it "Expext balance to decrease by deduct amount" do
+  #    amount = 10
+  #    expect{ subject.deduct amount }.to change{ subject.balance }.by -10
+  #  end
+  #end
 
   describe '#touch_in' do
 
@@ -66,7 +66,7 @@ describe Oystercard do
       before do
         subject.top_up(Oystercard::MAX_BALANCE)
       end
-      
+
       it 'reduces balance by MIN_BALANCE' do
         expect{ subject.touch_out }.to change{ subject.balance }.by -1
       end
