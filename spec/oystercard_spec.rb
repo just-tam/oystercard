@@ -37,4 +37,27 @@ describe Oystercard do
       expect{ subject.deduct amount }.to change{ subject.balance }.by -10
     end
   end
+
+  describe '#touch_in' do
+    it 'change status of oystercard in_journey? = true' do
+      expect{ subject.touch_in }.to change{ subject.in_journey? }.to true
+    end
+  end
+
+  describe '#touch_out' do
+    it 'change status of oystercard in_journey? = false' do
+      subject.touch_in
+      expect{ subject.touch_out }.to change{ subject.in_journey? }.to false
+    end 
+
+  end
+
+  describe '#in_journey' do
+    it "Expect in_journey to equal to false" do
+    expect(subject.in_journey?).to eq false
+    end
+
+  end
+
+
 end
