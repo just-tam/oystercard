@@ -5,6 +5,7 @@ class Oystercard
 
 
   MAX_BALANCE = 90
+  MIN_BALANCE = 1
 
   def initialize
     @balance = 0
@@ -21,6 +22,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "You need to top up" if @balance < MIN_BALANCE
     @in_journey = true
   end
 
