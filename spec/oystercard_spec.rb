@@ -39,22 +39,28 @@ describe Oystercard do
   end
 
   describe '#touch_in' do
-    it 'change status of oystercard in_journey? = true' do
-      expect{ subject.touch_in }.to change{ subject.in_journey? }.to true
+
+    context 'card has been touched in with valid balance' do
+      before do
+        subject.top_up(Oystercard::MAX_BALANCE)
+          it 'change status of oystercard in_journey? = true' do
+          expect{ subject.touch_in }.to change{ subject.in_journey }.to true
+        end
+      end
     end
   end
 
   describe '#touch_out' do
     it 'change status of oystercard in_journey? = false' do
       subject.touch_in
-      expect{ subject.touch_out }.to change{ subject.in_journey? }.to false
+      expect{ subject.touch_out }.to change{ subject.in_journey }.to false
     end 
 
   end
 
   describe '#in_journey' do
     it "Expect in_journey to equal to false" do
-    expect(subject.in_journey?).to eq false
+    expect(subject.in_journey).to eq false
     end
 
   end
