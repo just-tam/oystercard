@@ -21,9 +21,20 @@ describe Oystercard do
 
   describe "#top_up" do
     it "Expects balance to increase by top up amount" do
-      balance = subject.balance
       amount = 10
       expect{ subject.top_up amount }.to change{ subject.balance }.by 10
+    end
+
+    it "Expects error if balance exceeds £90" do
+      amount = 100
+      expect{ subject.top_up amount }.to raise_error "The maximum limit is £90"
+    end
+  end
+
+  describe "#deduct" do
+    it "Expext balance to decrease by deduct amount" do
+      amount = 10
+      expect{ subject.deduct amount }.to change{ subject.balance }.by -10
     end
   end
 end
