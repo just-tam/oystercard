@@ -43,9 +43,10 @@ describe Oystercard do
     context 'card has been touched in with valid balance' do
       before do
         subject.top_up(Oystercard::MAX_BALANCE)
-          it 'change status of oystercard in_journey? = true' do
-          expect{ subject.touch_in }.to change{ subject.in_journey }.to true
-        end
+      end
+
+      it 'change status of oystercard in_journey? = true' do
+        expect{ subject.touch_in }.to change{ subject.in_journey }.to true
       end
     end
 
@@ -61,11 +62,25 @@ describe Oystercard do
       expect{ subject.touch_out }.to change{ subject.in_journey }.to false
     end
 
+    context 'balance is reduced by MIN_BALANCE on touch_out' do
+      before do
+        subject.top_up(Oystercard::MAX_BALANCE)
+      end
+      
+      it 'reduces balance by MIN_BALANCE' do
+        expect{ subject.touch_out }.to change{ subject.balance }.by -1
+      end
+    end
+
+
   end
 
   describe '#in_journey' do
     it "Expect in_journey to equal to false" do
-    expect(subject.in_journey).to eq false
+      expect(subject.in_journey).to eq false
     end
   end
+
+
+
 end
