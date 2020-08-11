@@ -23,7 +23,7 @@ describe Oystercard do
     it "Expects balance to increase by top up amount" do
       balance = subject.balance
       amount = 10
-      expect(subject.top_up(amount)).to eq(balance + amount)
+      expect{ subject.top_up amount }.to change{ subject.balance }.by 10
     end
   end
 end
