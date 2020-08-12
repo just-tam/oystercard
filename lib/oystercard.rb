@@ -23,8 +23,8 @@ class Oystercard
   end
 
   def touch_out(station)
-  	deduct(@journey.fare)
     @journey.end_trip(station)
+    deduct(@journey.fare)
   end
 
 
