@@ -15,25 +15,15 @@ describe Oystercard do
     expect(subject).to respond_to(:top_up)
   end
 
-  it "Expect oystercard to respond to in_journey? method" do
-    expect(subject).to respond_to(:in_journey?)
-  end
-
   it "Expect oystercard to respond to top_up method with an amount" do
     expect(subject).to respond_to(:top_up).with(1).argument
   end
 
-  it 'is initially not in a journey' do
-    expect(subject).not_to be_in_journey
-  end
 
   it "Expect oystercard to respond to touch_in method with an argument" do
     expect(subject).to respond_to(:touch_in).with(1).argument
   end
 
-  it "Expects oystercard to have an empty list of journeys to begin with" do
-    expect(subject.journeys).to eq ([])
-  end
 
   describe "#top_up" do
     it "Expects balance to increase by top up amount" do
@@ -62,12 +52,6 @@ describe Oystercard do
       before do
         subject.top_up(Oystercard::MAX_BALANCE)
       end
-
-      it 'change status of oystercard in_journey? = true' do
-        #expect{ subject.touch_in(station) }.to change{ subject.in_journey }.to true
-        subject.touch_in("station")
-        expect(subject).to be_in_journey
-      end
     end
 
       it "Expects an error for touching in if balance is less than £1" do
@@ -85,13 +69,6 @@ describe Oystercard do
 
   let(:station){ double :station }
 
-    it 'change status of oystercard in_journey? = false' do
-      subject.top_up(Oystercard::MAX_BALANCE)
-      subject.touch_in("station")
-      subject.touch_out("station")
-      #expect{ subject.touch_out }.to change{ subject.in_journey }.to false
-      expect(subject).not_to be_in_journey
-    end
 
     context 'balance is reduced by MIN_BALANCE on touch_out' do
       before do
@@ -103,21 +80,6 @@ describe Oystercard do
       end
     end
 
-    it "Expects that touching in and out will create one journey" do
-      subject.top_up(Oystercard::MAX_BALANCE)
-      subject.touch_in("Angel")
-      subject.touch_out("Stockwell")
-      expect(subject.journeys.count).to eq (1)
-    end
-
   end
-
-  describe '#in_journey' do
-    it "Expect in_journey to equal to false" do
-      expect(subject.in_journey?).to eq false
-    end
-  end
-
-
 
 end

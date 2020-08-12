@@ -31,10 +31,7 @@ class Oystercard
     @journeys << { :entry => @entry_station, :exit => station }
   end
 
-  def in_journey?
-    !!entry_station
-  end
-
+ 
   private
 
   def deduct(amount)
