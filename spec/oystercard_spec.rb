@@ -57,12 +57,6 @@ describe Oystercard do
       it "Expects an error for touching in if balance is less than £1" do
         expect{ subject.touch_in(station) }.to raise_error "You need to top up"
       end
-
-      it "Stores the entry station" do
-        subject.top_up(Oystercard::MAX_BALANCE)
-        subject.touch_in(station)
-        expect(subject.entry_station).to eq station
-      end
   end
 
   describe '#touch_out' do
@@ -75,9 +69,17 @@ describe Oystercard do
         subject.top_up(Oystercard::MAX_BALANCE)
       end
 
-      it 'reduces balance by MIN_BALANCE' do
-        expect{ subject.touch_out("station") }.to change{ subject.balance }.by -1
+      it 'reduces balance by MIN_FARE' do
+        subject.touch_in("station")
+        subject.touch_out("station")
+        expect(subject.balance).to eq (89)
       end
+    end
+
+    it 'reduces balance by penalty fare if card has not touched in' do
+      subject.top_up(10)
+      subject.touch_out("station")
+      expect(subject.balance).to eq (4)
     end
 
   end

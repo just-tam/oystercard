@@ -5,8 +5,8 @@ describe Journey do
   it 'is initially not in a journey' do
     expect(subject).not_to be_in_journey
   end
-  
-  describe "#start_trip" do 
+
+  describe "#start_trip" do
     it 'change status of oystercard in_journey? = true' do
       subject.start_trip("station")
       expect(subject).to be_in_journey
@@ -18,11 +18,12 @@ describe Journey do
   it 'change status of oystercard in_journey? = false' do
     subject.start_trip("station")
     subject.end_trip("station")
+    subject.fare
     expect(subject).not_to be_in_journey
   end
-    
+
   end
-  
+
   describe "#journey_history" do
     it "Expects oystercard to have an empty list of journeys to begin with" do
       expect(subject.journey_history).to eq ([])
@@ -31,12 +32,13 @@ describe Journey do
     it "Expects that touching in and out will create one journey" do
       subject.start_trip("Angel")
       subject.end_trip("Stockwell")
+      subject.fare
       expect(subject.journey_history.count).to eq (1)
     end
   end
 
   describe "#fare" do
-    it "charges the minimum fare" do 
+    it "charges the minimum fare" do
       subject.start_trip("Angel")
       subject.end_trip("Stockwell")
       expect(subject.fare).to eq Journey::MINIMUM_FARE
