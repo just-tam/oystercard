@@ -6,11 +6,11 @@ class Journey
   def initialize
     @entry_station
     @exit_station
-    @journey_history = []
+    @journey_history = nil
   end
 
   def create_trip
-    @journey_history << {:entry_station => @entry_station, :exit_station => @exit_station}
+    @journey_history = {:entry_station => @entry_station, :exit_station => @exit_station}
     @entry_station = nil
     @exit_station = nil
   end
@@ -25,9 +25,9 @@ class Journey
 
   def fare
     create_trip
-    if @journey_history[-1][:exit_station] == nil
+    if @journey_history[:exit_station] == nil
       return PENALTY_FARE
-    elsif @journey_history[-1][:entry_station] == nil
+    elsif @journey_history[:entry_station] == nil
       return PENALTY_FARE
     else
       return MINIMUM_FARE
