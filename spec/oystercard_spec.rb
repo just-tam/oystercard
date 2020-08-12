@@ -76,6 +76,13 @@ describe Oystercard do
       end
     end
 
+    it "Reduces the blanace by penalty fare if card has not touch out" do
+      subject.top_up(10)
+      subject.touch_in("station")
+      subject.touch_in("station")
+      expect(subject.balance).to eq (4)
+    end 
+
     it 'reduces balance by penalty fare if card has not touched in' do
       subject.top_up(10)
       subject.touch_out("station")
