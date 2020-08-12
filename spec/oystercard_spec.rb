@@ -31,6 +31,10 @@ describe Oystercard do
     expect(subject).to respond_to(:touch_in).with(1).argument
   end
 
+  it "Expects oystercard to have an empty list of journeys to begin with" do
+    expect(subject.journeys).to eq ([])
+  end
+
   describe "#top_up" do
     it "Expects balance to increase by top up amount" do
       amount = 10
@@ -84,7 +88,7 @@ describe Oystercard do
     it 'change status of oystercard in_journey? = false' do
       subject.top_up(Oystercard::MAX_BALANCE)
       subject.touch_in("station")
-      subject.touch_out
+      subject.touch_out("station")
       #expect{ subject.touch_out }.to change{ subject.in_journey }.to false
       expect(subject).not_to be_in_journey
     end
@@ -95,10 +99,16 @@ describe Oystercard do
       end
 
       it 'reduces balance by MIN_BALANCE' do
-        expect{ subject.touch_out }.to change{ subject.balance }.by -1
+        expect{ subject.touch_out("station") }.to change{ subject.balance }.by -1
       end
     end
 
+    it "Expects that touching in and out will create one journey" do
+      subject.top_up(Oystercard::MAX_BALANCE)
+      subject.touch_in("Angel")
+      subject.touch_out("Stockwell")
+      expect(subject.journeys.count).to eq (1)
+    end
 
   end
 
