@@ -1,4 +1,5 @@
 require "journey"
+require "journeylog"
 
 describe Journey do
 
@@ -26,14 +27,14 @@ describe Journey do
 
   describe "#journey_history" do
     it "Expects oystercard to have an empty list of journeys to begin with" do
-      expect(subject.journey_history).to eq ([])
+      expect(subject.journey_history).to eq (nil)
     end
 
     it "Expects that touching in and out will create one journey" do
       subject.start_trip("Angel")
       subject.end_trip("Stockwell")
       subject.fare
-      expect(subject.journey_history.count).to eq (1)
+      expect(subject.journey_history.count).to eq (2)
     end
   end
 

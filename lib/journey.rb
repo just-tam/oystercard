@@ -9,12 +9,6 @@ class Journey
     @journey_history = nil
   end
 
-  def create_trip
-    @journey_history = {:entry_station => @entry_station, :exit_station => @exit_station}
-    @entry_station = nil
-    @exit_station = nil
-  end
-
   def start_trip(station)
     @entry_station = station
   end
@@ -24,7 +18,7 @@ class Journey
   end
 
   def fare
-    create_trip
+    current_journey
     if @journey_history[:exit_station] == nil
       return PENALTY_FARE
     elsif @journey_history[:entry_station] == nil
@@ -38,4 +32,11 @@ class Journey
     !!entry_station
   end
 
+  private
+
+  def current_journey
+    @journey_history = {:entry_station => @entry_station, :exit_station => @exit_station}
+    @entry_station = nil
+    @exit_station = nil
+  end
 end
